@@ -1,0 +1,14 @@
+.ccm-page .author-profile {
+    margin: 60px auto 30px;
+}
+.ccm-page .author-profile .author-profile__attributes {
+    margin: 20px auto;
+}
+.ccm-page .author-profile .author-profile__image,
+.ccm-page .author-profile .author-profile__body {
+    display: table-cell;
+    vertical-align: top;
+}
+.ccm-page .author-profile .author-profile__image {
+    padding-right: 20px;
+}

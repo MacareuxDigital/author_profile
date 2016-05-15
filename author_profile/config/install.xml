@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<concrete5-cif version="1.0">
+    <blocktypes>
+        <blocktype handle="author_profile" package="author_profile"/>
+        <blocktype handle="author_page_list" package="author_profile"/>
+    </blocktypes>
+    <attributekeys>
+        <attributekey handle="nick_name" name="Nickname" package="author_profile" searchable="1" indexed="1" type="text" category="user" profile-displayed="1" profile-editable="1" profile-required="0" register-editable="1" register-required="0" member-list-displayed="0" />
+        <attributekey handle="bio" name="Biographical Info" package="author_profile" searchable="1" indexed="1" type="textarea" category="user" profile-displayed="1" profile-editable="1" profile-required="0" register-editable="1" register-required="0" member-list-displayed="0">
+            <type mode="rich_text"/>
+        </attributekey>
+    </attributekeys>
+</concrete5-cif>
