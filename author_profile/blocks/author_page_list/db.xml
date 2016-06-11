@@ -12,6 +12,45 @@
       <unsigned/>
       <notnull/>
     </field>
+    <field name="includeDate" type="boolean">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="truncateSummaries" type="boolean">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="truncateChars" type="integer">
+      <unsigned/>
+      <default value="128"/>
+      <notnull/>
+    </field>
+    <field name="displayFeaturedOnly" type="boolean">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="displayThumbnail" type="boolean">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="displayAliases" type="boolean">
+      <unsigned/>
+      <default value="1"/>
+      <notnull/>
+    </field>
+    <field name="paginate" type="boolean">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="ptID" type="smallint">
+      <unsigned/>
+      <notnull/>
+    </field>
     <field name="orderBy" type="string" size="32" />
     <field name="useButtonForLink" type="boolean">
       <unsigned/>
@@ -20,18 +59,6 @@
     </field>
     <field name="buttonLinkText" type="string" size="255"/>
     <field name="pageListTitle" type="string" size="255"/>
-    <field name="filterDateOption" type="string" size="25" comment="('all','today','past','future','between')">
-      <default value="all"/>
-    </field>
-    <field name="filterDateDays" type="integer">
-      <unsigned/>
-      <default value="0"/>
-      <notnull/>
-    </field>
-    <field name="filterDateStart" type="string" size="20">
-    </field>
-    <field name="filterDateEnd" type="string" size="20">
-    </field>
     <field name="includeName" type="boolean">
       <unsigned/>
       <default value="1"/>
@@ -42,39 +69,7 @@
       <default value="1"/>
       <notnull/>
     </field>
-    <field name="includeDate" type="boolean">
-      <unsigned/>
-      <default value="0"/>
-      <notnull/>
-    </field>
-    <field name="includeAllDescendents" type="boolean">
-      <unsigned/>
-      <default value="0"/>
-      <notnull/>
-    </field>
-    <field name="paginate" type="boolean">
-      <unsigned/>
-      <default value="0"/>
-      <notnull/>
-    </field>
-    <field name="displayAliases" type="boolean">
-      <unsigned/>
-      <default value="1"/>
-      <notnull/>
-    </field>
-    <field name="ptID" type="smallint">
-      <unsigned/>
-    </field>
-    <field name="truncateSummaries" type="integer">
-      <default value="0"/>
-    </field>
     <field name="noResultsMessage" type="string" size="255"/>
-    <field name="displayThumbnail" type="boolean">
-      <default value="0"/>
-    </field>
-    <field name="truncateChars" type="integer">
-      <default value="128"/>
-    </field>
     <index name="ptID">
       <col>ptID</col>
     </index>

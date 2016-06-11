@@ -3,7 +3,7 @@ $stringValidator = Core::make('helper/validation/strings');
 $name = $ui->getAttribute('nick_name', 'display');
 $name = ($stringValidator->notempty($name)) ? $name : $ui->getUserName();
 ?>
-<div class="author-profile" itemscope itemtype="http://schema.org/Person">
+<aside class="author-profile" itemscope itemtype="http://schema.org/Person">
     <h5 class="author-profile__title"><?php echo t('Written by'); ?></h4>
     <div class="clearfix">
         <?php if ($displayProfilePicture) { ?>
@@ -53,5 +53,4 @@ $name = ($stringValidator->notempty($name)) ? $name : $ui->getUserName();
             </div>
         <?php } ?>
     </div>
-</div>
-
+</aside>

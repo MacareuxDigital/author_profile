@@ -33,11 +33,11 @@ class Controller extends Package
      */
     public function getPackageDescription()
     {
-        return t("Author Profile Block and Author's page list");
+        return t("Author Profile Block and Author's Page List Block");
     }
 
     /**
-     * Returns the installed package version.
+     * Returns the installed package name.
      *
      * @return string
      */
