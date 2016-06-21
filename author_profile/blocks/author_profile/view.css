@@ -1,6 +1,10 @@
 .ccm-page .author-profile {
     margin: 60px auto 30px;
 }
+.ccm-page .author-profile img {
+    max-width: 80px;
+    max-height: 80px;
+}
 .ccm-page .author-profile .author-profile__attributes {
     margin: 20px auto;
 }
