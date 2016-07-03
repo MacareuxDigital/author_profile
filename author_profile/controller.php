@@ -8,22 +8,22 @@ use Core;
 class Controller extends Package
 {
     /**
-     * Package handle.
+     * @var string Package handle.
      */
     protected $pkgHandle = 'author_profile';
 
     /**
-     * Required concrete5 version.
+     * @var string Required concrete5 version.
      */
     protected $appVersionRequired = '5.7.5';
 
     /**
-     * Package version.
+     * @var string Package version.
      */
     protected $pkgVersion = '0.1';
 
     /**
-     * Remove \Src from package namespace.
+     * @var boolean Remove \Src from package namespace.
      */
     protected $pkgAutoloaderMapCoreExtensions = true;
 
@@ -47,6 +47,9 @@ class Controller extends Package
         return t('Author Profile');
     }
 
+    /**
+     * Install process of the package.
+     */
     public function install()
     {
         $pkg = parent::install();
@@ -54,6 +57,9 @@ class Controller extends Package
         $ci->importContentFile($pkg->getPackagePath() . '/config/install.xml');
     }
 
+    /**
+     * Startup process of the package.
+     */
     public function on_start()
     {
         /** @var \Concrete\Core\Application\Service\UserInterface\Help\BlockTypeManager $blockTypeManager */
