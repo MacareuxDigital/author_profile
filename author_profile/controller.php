@@ -3,6 +3,7 @@ namespace Concrete\Package\AuthorProfile;
 
 use Concrete\Core\Package\Package;
 use Concrete\Core\Backup\ContentImporter;
+use Core;
 
 class Controller extends Package
 {
@@ -51,5 +52,15 @@ class Controller extends Package
         $pkg = parent::install();
         $ci = new ContentImporter();
         $ci->importContentFile($pkg->getPackagePath() . '/config/install.xml');
+    }
+
+    public function on_start()
+    {
+        /** @var \Concrete\Core\Application\Service\UserInterface\Help\BlockTypeManager $blockTypeManager */
+        $blockTypeManager = Core::make('help/block_type');
+        $blockTypeManager->registerMessages(array(
+            'author_profile' => array(t('You can show informations about the author of current page.')),
+            'author_page_list' => array(t("Author's Page List blocks creates a navigation menu that shows pages created by the current page's author. You can also use this block on Public Profile single page."))
+        ));
     }
 }
