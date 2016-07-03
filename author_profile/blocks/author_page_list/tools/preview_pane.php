@@ -19,8 +19,10 @@ $controller->displayThumbnail = !!$_REQUEST['displayThumbnail'];
 $controller->includeDescription = !!$_REQUEST['includeDescription'];
 $controller->useButtonForLink = !!$_REQUEST['useButtonForLink'];
 $controller->on_start();
+$controller->add();
 $controller->view();
 $pages = $controller->get('pages');
+$sets = $controller->getSets();
 
 extract($controller->getSets());
 

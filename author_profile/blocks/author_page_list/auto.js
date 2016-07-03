@@ -52,7 +52,7 @@ var authorPageList ={
             value: CCM_CID
         });
 
-        $.get(this.servicesDir + 'preview_pane', query, function(msg) {
+        $.get(this.servicesDir + '/preview_pane', query, function(msg) {
             container.find('div.preview').find('div.render').html(msg);
             authorPageList.hideLoader();
         }).fail(function() {
