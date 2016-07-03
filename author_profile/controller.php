@@ -60,7 +60,7 @@ class Controller extends Package
         $blockTypeManager = Core::make('help/block_type');
         $blockTypeManager->registerMessages(array(
             'author_profile' => array(t('You can show informations about the author of current page.')),
-            'author_page_list' => array(t("Author's Page List blocks creates a navigation menu that shows pages created by the current page's author. You can also use this block on Public Profile single page."))
+            'author_page_list' => array(t("Author's Page List blocks creates a navigation menu that shows pages created by the current page's author. You can also use this block on Public Profile single page.")),
         ));
     }
 }

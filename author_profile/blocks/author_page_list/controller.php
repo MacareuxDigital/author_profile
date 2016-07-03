@@ -138,7 +138,7 @@ class Controller extends BlockController
         $this->set('featuredAttribute', CollectionAttributeKey::getByHandle('is_featured'));
         $this->set('thumbnailAttribute', CollectionAttributeKey::getByHandle('thumbnail'));
     }
-    
+
     public function edit()
     {
         $b = $this->getBlockObject();
@@ -154,32 +154,32 @@ class Controller extends BlockController
     public function save($args)
     {
         $args = $args + array(
-                    'num'                   => 0,
-                    'includeDate'           => 0,
-                    'truncateSummaries'     => 0,
-                    'truncateChars'         => 0,
-                    'displayFeaturedOnly'   => 0,
-                    'displayThumbnail'      => 0,
-                    'displayAliases'        => 0,
-                    'paginate'              => 0,
-                    'ptID'                  => 0,
-                    'useButtonForLink'      => 0,
-                    'includeName'           => 0,
-                    'includeDescription'    => 0,
+                    'num' => 0,
+                    'includeDate' => 0,
+                    'truncateSummaries' => 0,
+                    'truncateChars' => 0,
+                    'displayFeaturedOnly' => 0,
+                    'displayThumbnail' => 0,
+                    'displayAliases' => 0,
+                    'paginate' => 0,
+                    'ptID' => 0,
+                    'useButtonForLink' => 0,
+                    'includeName' => 0,
+                    'includeDescription' => 0,
                 );
 
-        $args['num']                    = intval($args['num']);
-        $args['includeDate']            = ($args['includeDate']) ? '1' : '0';
-        $args['truncateSummaries']      = ($args['truncateSummaries']) ? '1' : '0';
-        $args['truncateChars']          = intval($args['truncateChars']);
-        $args['displayFeaturedOnly']    = ($args['displayFeaturedOnly']) ? '1' : '0';
-        $args['displayThumbnail']       = ($args['displayThumbnail']) ? '1' : '0';
-        $args['displayAliases']         = ($args['displayAliases']) ? '1' : '0';
-        $args['paginate']               = ($args['paginate']) ? '1' : '0';
-        $args['ptID']                   = intval($args['ptID']);
-        $args['useButtonForLink']       = ($args['useButtonForLink']) ? '1' : '0';
-        $args['includeName']            = ($args['includeName']) ? '1' : '0';
-        $args['includeDescription']     = ($args['includeDescription']) ? '1' : '0';
+        $args['num'] = intval($args['num']);
+        $args['includeDate'] = ($args['includeDate']) ? '1' : '0';
+        $args['truncateSummaries'] = ($args['truncateSummaries']) ? '1' : '0';
+        $args['truncateChars'] = intval($args['truncateChars']);
+        $args['displayFeaturedOnly'] = ($args['displayFeaturedOnly']) ? '1' : '0';
+        $args['displayThumbnail'] = ($args['displayThumbnail']) ? '1' : '0';
+        $args['displayAliases'] = ($args['displayAliases']) ? '1' : '0';
+        $args['paginate'] = ($args['paginate']) ? '1' : '0';
+        $args['ptID'] = intval($args['ptID']);
+        $args['useButtonForLink'] = ($args['useButtonForLink']) ? '1' : '0';
+        $args['includeName'] = ($args['includeName']) ? '1' : '0';
+        $args['includeDescription'] = ($args['includeDescription']) ? '1' : '0';
 
         parent::save($args);
     }

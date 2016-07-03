@@ -34,10 +34,9 @@ class Controller extends BlockController
     {
         $this->edit();
     }
-    
+
     public function edit()
     {
-        
     }
 
     public function save($data)
@@ -49,14 +48,14 @@ class Controller extends BlockController
         $data['linkToProfilePage'] = $data['linkToProfilePage'] ? 1 : 0;
         parent::save($data);
     }
-    
+
     public function view()
     {
         $c = Page::getCurrentPage();
         $uID = $c->getCollectionUserID();
         $ui = Core::make('Concrete\Core\User\UserInfoFactory')->getByID($uID);
         $this->set('ui', $ui);
-        
+
         $this->set('publicProfileAttributes', UserAttributeKey::getPublicProfileList());
         $this->set('memberListAttributes', UserAttributeKey::getMemberListList());
         $this->set('publicProfileEnabled', Config::get('concrete.user.profiles_enabled'));
