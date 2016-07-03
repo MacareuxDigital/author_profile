@@ -1,30 +1,23 @@
 <?php
 defined('C5_EXECUTE') or die('Access Denied.');
 
-use Concrete\Package\AuthorProfile\Block\AuthorPageList\Controller;
 $request = Request::getInstance();
 $request->setCurrentPage(Page::getByID($_REQUEST['current_page']));
-$previewMode = true;
-$nh = Loader::helper('navigation');
-$controller = new Controller();
+
+$bt = Concrete\Core\Block\BlockType\BlockType::getByHandle('author_page_list');
+$controller = $bt->getController();
 $controller->num = intval($_REQUEST['num']);
+$controller->paginate = !!$_REQUEST['paginate'];
 $controller->orderBy = $_REQUEST['orderBy'];
-$controller->ptID = intval($_REQUEST['ptID']);
 $controller->displayFeaturedOnly = !!$_REQUEST['displayFeaturedOnly'];
 $controller->displayAliases = !!$_REQUEST['displayAliases'];
-$controller->paginate = !!$_REQUEST['paginate'];
-$controller->includeName = !!$_REQUEST['includeName'];
-$controller->includeDate = !!$_REQUEST['includeDate'];
-$controller->displayThumbnail = !!$_REQUEST['displayThumbnail'];
-$controller->includeDescription = !!$_REQUEST['includeDescription'];
-$controller->useButtonForLink = !!$_REQUEST['useButtonForLink'];
-$controller->on_start();
-$controller->add();
-$controller->view();
-$pages = $controller->get('pages');
-$sets = $controller->getSets();
+$controller->ptID = intval($_REQUEST['ptID']);
+$controller->set('includeName', !!$_REQUEST['includeName']);
+$controller->set('includeDate', !!$_REQUEST['includeDate']);
+$controller->set('displayThumbnail', !!$_REQUEST['displayThumbnail']);
+$controller->set('includeDescription', !!$_REQUEST['includeDescription']);
+$controller->set('useButtonForLink', !!$_REQUEST['useButtonForLink']);
 
-extract($controller->getSets());
-
-require(dirname(__FILE__) . '/../view.php');
+$bv = new \Concrete\Core\Block\View\BlockView($bt);
+$bv->render('view');
 exit;
