@@ -9,7 +9,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
     <div class="ccm-edit-mode-disabled-item"><?=t('Empty Page List Block.')?></div>
 <?php } else { ?>
 
-    <div class="ccm-block-page-list-wrapper">
+    <div class="ccm-block-page-list-wrapper ccm-block-author-page-list-wrapper">
 
         <?php if (isset($pageListTitle) && $pageListTitle): ?>
             <div class="ccm-block-page-list-header">
@@ -21,7 +21,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
             <a href="<?php echo $rssUrl ?>" target="_blank" class="ccm-block-page-list-rss-feed"><i class="fa fa-rss"></i></a>
         <?php endif; ?>
 
-        <div class="ccm-block-page-list-pages">
+        <div class="ccm-block-page-list-pages ccm-block-author-page-list-pages">
 
             <?php
 
