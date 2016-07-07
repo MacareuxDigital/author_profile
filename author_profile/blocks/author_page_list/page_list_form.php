@@ -209,19 +209,19 @@ $form = Core::make('helper/form');
                 <div class="ccm-page-list-button-text" <?= ($useButtonForLink ? "" : "style=\"display:none;\"") ?>>
                     <div class="form-group">
                         <label class="control-label"><?= t('Link Text') ?></label>
-                        <input class="form-control" type="text" name="buttonLinkText" value="<?=$buttonLinkText?>" />
+                        <input class="form-control" type="text" name="buttonLinkText" value="<?=$buttonLinkText?>" maxlength="255" />
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label"><?= t('Title of Page List') ?></label>
-                <input type="text" class="form-control" name="pageListTitle" value="<?=$pageListTitle?>" />
+                <input type="text" class="form-control" name="pageListTitle" value="<?=$pageListTitle?>" maxlength="255" />
             </div>
 
             <div class="form-group">
                 <label class="control-label"><?= t('Message to Display When No Pages Listed.') ?></label>
-                <textarea class="form-control" name="noResultsMessage"><?=$noResultsMessage?></textarea>
+                <textarea class="form-control" name="noResultsMessage" maxlength="255"><?=$noResultsMessage?></textarea>
             </div>
             <fieldset>
 

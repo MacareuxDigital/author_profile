@@ -12,7 +12,7 @@ use BlockType;
 class Controller extends BlockController
 {
     protected $btTable = 'btAuthorPageList';
-    protected $btDefaultSet = 'multimedia';
+    protected $btDefaultSet = 'social';
     protected $btInterfaceWidth = "800";
     protected $btInterfaceHeight = "500";
     protected $btWrapperClass = 'ccm-ui';
@@ -28,7 +28,7 @@ class Controller extends BlockController
 
     public function getBlockTypeName()
     {
-        return t("Author's Page List");
+        return t("Authors Pages");
     }
 
     public function on_start()
@@ -168,10 +168,10 @@ class Controller extends BlockController
                     'includeDescription' => 0,
                 );
 
-        $args['num'] = intval($args['num']);
+        $args['num'] = ($args['num'] > 0) ? intval($args['num']) : 0;
         $args['includeDate'] = ($args['includeDate']) ? '1' : '0';
         $args['truncateSummaries'] = ($args['truncateSummaries']) ? '1' : '0';
-        $args['truncateChars'] = intval($args['truncateChars']);
+        $args['truncateChars'] = ($args['truncateChars'] > 0) ? intval($args['truncateChars']) : 0;
         $args['displayFeaturedOnly'] = ($args['displayFeaturedOnly']) ? '1' : '0';
         $args['displayThumbnail'] = ($args['displayThumbnail']) ? '1' : '0';
         $args['displayAliases'] = ($args['displayAliases']) ? '1' : '0';

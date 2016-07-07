@@ -10,7 +10,7 @@ use UserAttributeKey;
 class Controller extends BlockController
 {
     protected $btTable = 'btAuthorProfile';
-    protected $btDefaultSet = 'multimedia';
+    protected $btDefaultSet = 'social';
     protected $btInterfaceWidth = "400";
     protected $btInterfaceHeight = "300";
     protected $btWrapperClass = 'ccm-ui';
