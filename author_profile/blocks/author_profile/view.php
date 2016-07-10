@@ -4,7 +4,7 @@ $name = $ui->getAttribute('nick_name', 'display');
 $name = ($stringValidator->notempty($name)) ? $name : $ui->getUserName();
 ?>
 <aside class="author-profile" itemscope itemtype="http://schema.org/Person">
-    <h5 class="author-profile__title"><?php echo t('Written by'); ?></h4>
+    <h5 class="author-profile__title"><?php echo t('Written by'); ?></h5>
     <div class="clearfix">
         <?php if ($displayProfilePicture) { ?>
             <div class="author-profile__image">
