@@ -1,0 +1,250 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Author Profile 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-17 18:09+0900\n"
+"PO-Revision-Date: 2016-07-17 18:12+0900\n"
+"Last-Translator: Takuro Hishikawa <hishikawa@concrete5.co.jp>\n"
+"Language-Team: \n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-KeywordsList: t;t2:1,2;tc:1c,2\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-SearchPath-0: ../../..\n"
+
+#: ../../../blocks/author_page_list/controller.php:26
+msgid "A block to display pages written by current user."
+msgstr "現在のユーザーによって書かれたページを表示するブロックです。"
+
+#: ../../../blocks/author_page_list/controller.php:31
+msgid "Authors Pages"
+msgstr "投稿者ページ"
+
+#: ../../../blocks/author_page_list/page_list_form.php:12
+#, fuzzy
+msgid "Settings"
+msgstr "設定"
+
+#: ../../../blocks/author_page_list/page_list_form.php:15
+#, fuzzy
+msgid "Number of Pages to Display"
+msgstr "表示するページ数"
+
+#: ../../../blocks/author_page_list/page_list_form.php:20
+#, fuzzy
+msgid "Page Type"
+msgstr "ページタイプ"
+
+#: ../../../blocks/author_page_list/page_list_form.php:27
+#, fuzzy
+msgid "All"
+msgstr "すべて"
+
+#: ../../../blocks/author_page_list/page_list_form.php:46
+#, fuzzy
+msgid "Filters"
+msgstr "フィルター"
+
+#: ../../../blocks/author_page_list/page_list_form.php:52
+#, fuzzy
+msgid "Featured pages only."
+msgstr "特集ページのみ。"
+
+#: ../../../blocks/author_page_list/page_list_form.php:57
+#, fuzzy
+msgid "(<strong>Note</strong>: You must create the \"is_featured\" page attribute first.)"
+msgstr "(<strong>注意</strong>: \"is_featured\"というページ属性を作成する必要があります。)"
+
+#: ../../../blocks/author_page_list/page_list_form.php:65
+#, fuzzy
+msgid "Display page aliases."
+msgstr "転載（エイリアス）ページを表示"
+
+#: ../../../blocks/author_page_list/page_list_form.php:72
+#, fuzzy
+msgid "Pagination"
+msgstr "ページ付け"
+
+#: ../../../blocks/author_page_list/page_list_form.php:76
+#, fuzzy
+msgid "Display pagination interface if more items are available than are displayed."
+msgstr "表示数よりもアイテムが多い場合、ページ付けインターフェースを表示します。"
+
+#: ../../../blocks/author_page_list/page_list_form.php:82
+#, fuzzy
+msgid "Sort"
+msgstr "並び替え"
+
+#: ../../../blocks/author_page_list/page_list_form.php:86
+#, fuzzy
+msgid "Sitemap order"
+msgstr "サイトマップどおりの並び"
+
+#: ../../../blocks/author_page_list/page_list_form.php:89
+#, fuzzy
+msgid "Most recent first"
+msgstr "最新順"
+
+#: ../../../blocks/author_page_list/page_list_form.php:92
+#, fuzzy
+msgid "Earliest first"
+msgstr "古い順"
+
+#: ../../../blocks/author_page_list/page_list_form.php:95
+#, fuzzy
+msgid "Alphabetical order"
+msgstr "アルファベット順"
+
+#: ../../../blocks/author_page_list/page_list_form.php:98
+#, fuzzy
+msgid "Reverse alphabetical order"
+msgstr "逆アルファベット順"
+
+#: ../../../blocks/author_page_list/page_list_form.php:101
+#, fuzzy
+msgid "Random"
+msgstr "ランダム"
+
+#: ../../../blocks/author_page_list/page_list_form.php:108
+#, fuzzy
+msgid "Output"
+msgstr "出力"
+
+#: ../../../blocks/author_page_list/page_list_form.php:111
+#, fuzzy
+msgid "Include Page Name"
+msgstr "ページ名を含める"
+
+#: ../../../blocks/author_page_list/page_list_form.php:115 ../../../blocks/author_page_list/page_list_form.php:131
+#: ../../../blocks/author_page_list/page_list_form.php:161 ../../../blocks/author_page_list/page_list_form.php:178
+#: ../../../blocks/author_page_list/page_list_form.php:200
+msgid "No"
+msgstr "いいえ"
+
+#: ../../../blocks/author_page_list/page_list_form.php:121 ../../../blocks/author_page_list/page_list_form.php:137
+#: ../../../blocks/author_page_list/page_list_form.php:167 ../../../blocks/author_page_list/page_list_form.php:185
+#: ../../../blocks/author_page_list/page_list_form.php:206
+#, fuzzy
+msgid "Yes"
+msgstr "はい"
+
+#: ../../../blocks/author_page_list/page_list_form.php:127
+#, fuzzy
+msgid "Include Page Description"
+msgstr "ページの説明を含める"
+
+#: ../../../blocks/author_page_list/page_list_form.php:141
+#, fuzzy
+msgid "Display Truncated Description"
+msgstr "説明文を切り詰めて表示"
+
+#: ../../../blocks/author_page_list/page_list_form.php:150
+#, fuzzy
+msgid "characters"
+msgstr "文字"
+
+#: ../../../blocks/author_page_list/page_list_form.php:157
+#, fuzzy
+msgid "Include Public Page Date"
+msgstr "日付を含める"
+
+#: ../../../blocks/author_page_list/page_list_form.php:170
+#, fuzzy
+msgid "This is usually the date the page is created. It can be changed from the page attributes panel."
+msgstr "これは通常ページが作成された日です。ページ属性パネルから変更できます。"
+
+#: ../../../blocks/author_page_list/page_list_form.php:173
+#, fuzzy
+msgid "Display Thumbnail Image"
+msgstr "サムネイル画像を表示"
+
+#: ../../../blocks/author_page_list/page_list_form.php:190
+#, fuzzy
+msgid "You must create an attribute with the 'thumbnail' handle in order to use this option."
+msgstr "このオプションを使用するためには、\"thumbnail\"というハンドルの属性が作成されていることが必要です。"
+
+#: ../../../blocks/author_page_list/page_list_form.php:196
+#, fuzzy
+msgid "Use Different Link than Page Name"
+msgstr "ページ名とは違うリンクを使用する"
+
+#: ../../../blocks/author_page_list/page_list_form.php:211
+#, fuzzy
+msgid "Link Text"
+msgstr "リンク文字"
+
+#: ../../../blocks/author_page_list/page_list_form.php:218
+#, fuzzy
+msgid "Title of Page List"
+msgstr "ページリストのタイトル"
+
+#: ../../../blocks/author_page_list/page_list_form.php:223
+#, fuzzy
+msgid "Message to Display When No Pages Listed."
+msgstr "表示するページがない場合のメッセージ"
+
+#: ../../../blocks/author_page_list/page_list_form.php:236
+#, fuzzy
+msgid "Included Pages"
+msgstr "含まれるページ"
+
+#: ../../../blocks/author_page_list/view.php:9
+#, fuzzy
+msgid "Empty Page List Block."
+msgstr "空のページリストブロックです。"
+
+#: ../../../blocks/author_profile/controller.php:25
+msgid "A block to display public attributes of the page's author"
+msgstr "ページの投稿者の公開属性を表示するブロックです。"
+
+#: ../../../blocks/author_profile/controller.php:30 ../../../controller.php:47
+msgid "Author Profile"
+msgstr "投稿者プロフィール"
+
+#: ../../../blocks/author_profile/edit.php:6
+msgid "Display Basic User Attributes"
+msgstr "基本ユーザー属性を表示"
+
+#: ../../../blocks/author_profile/edit.php:14
+msgid "Display User Attributes for Public Profile"
+msgstr "公開プロフィールユーザー属性を表示"
+
+#: ../../../blocks/author_profile/edit.php:22
+msgid "Display User Attributes for Member List"
+msgstr "メンバー一覧ユーザー属性を表示"
+
+#: ../../../blocks/author_profile/edit.php:30
+msgid "Display Profile Picture"
+msgstr "プロフィール画像を表示"
+
+#: ../../../blocks/author_profile/edit.php:38
+#, fuzzy
+msgid "Link to Profile Page"
+msgstr "親ページのパス"
+
+#: ../../../blocks/author_profile/view.php:7
+msgid "Written by"
+msgstr "投稿者"
+
+#: ../../../controller.php:37
+msgid "Author Profile Block and Author's Page List Block"
+msgstr "投稿者プロフィールブロックと投稿者ページリストブロック"
+
+#: ../../../controller.php:68
+msgid "You can show informations about the author of current page."
+msgstr "現在のページの投稿者についての情報を表示できます。"
+
+#: ../../../controller.php:69
+msgid ""
+"Author's Page List blocks creates a navigation menu that shows pages created by the current page's author. You can "
+"also use this block on Public Profile single page."
+msgstr ""
+
+# Don't change this, please use same words with concrete5 core translation. see www.transifex.com/projects/p/concrete5/
+#~ msgid "Access Denied."
+#~ msgstr "アクセス拒否"
