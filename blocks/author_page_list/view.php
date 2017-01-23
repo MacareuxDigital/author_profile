@@ -96,7 +96,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
                     <?php if (is_object($thumbnail)): ?>
                         <div class="ccm-block-page-list-page-entry-thumbnail">
-                            <?
+                            <?php
                             $img = Core::make('html/image', array($thumbnail));
                             $tag = $img->getTag();
                             $tag->addClass('img-responsive');
