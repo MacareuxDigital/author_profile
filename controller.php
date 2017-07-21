@@ -15,12 +15,12 @@ class Controller extends Package
     /**
      * @var string Required concrete5 version.
      */
-    protected $appVersionRequired = '5.7.5';
+    protected $appVersionRequired = '8.2.0';
 
     /**
      * @var string Package version.
      */
-    protected $pkgVersion = '1.0';
+    protected $pkgVersion = '1.1';
 
     /**
      * @var boolean Remove \Src from package namespace.

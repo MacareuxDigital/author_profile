@@ -53,7 +53,7 @@ class Controller extends BlockController
     {
         $c = Page::getCurrentPage();
         $uID = $c->getCollectionUserID();
-        $ui = Core::make('Concrete\Core\User\UserInfoFactory')->getByID($uID);
+        $ui = Core::make('Concrete\Core\User\UserInfoRepository')->getByID($uID);
         $this->set('ui', $ui);
 
         $this->set('publicProfileAttributes', UserAttributeKey::getPublicProfileList());
