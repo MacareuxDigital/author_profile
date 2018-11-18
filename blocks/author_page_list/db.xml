@@ -70,6 +70,14 @@
       <notnull/>
     </field>
     <field name="noResultsMessage" type="string" size="255"/>
+    <field name="displayMode" type="string" size="1">
+      <default value="S"/>
+    </field>
+    <field name="hideNotViewableUser" type="boolean">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
     <index name="ptID">
       <col>ptID</col>
     </index>

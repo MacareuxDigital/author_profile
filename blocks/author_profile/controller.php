@@ -1,18 +1,19 @@
 <?php
 namespace Concrete\Package\AuthorProfile\Block\AuthorProfile;
 
-use Page;
-use Core;
-use Config;
+use Concrete\Core\Attribute\Category\UserCategory;
+use Concrete\Core\Config\Repository\Liaison;
+use Concrete\Core\Html\Service\Seo;
+use Concrete\Core\Page\Page;
 use Concrete\Core\Block\BlockController;
-use UserAttributeKey;
+use Concrete\Core\Utility\Service\Validation\Strings;
 
 class Controller extends BlockController
 {
     protected $btTable = 'btAuthorProfile';
     protected $btDefaultSet = 'social';
-    protected $btInterfaceWidth = "400";
-    protected $btInterfaceHeight = "300";
+    protected $btInterfaceWidth = '400';
+    protected $btInterfaceHeight = '300';
     protected $btWrapperClass = 'ccm-ui';
     protected $btCacheBlockRecord = true;
     protected $btCacheBlockOutput = true;
@@ -46,18 +47,60 @@ class Controller extends BlockController
         $data['displayMemberListAttributes'] = $data['displayMemberListAttributes'] ? 1 : 0;
         $data['displayProfilePicture'] = $data['displayProfilePicture'] ? 1 : 0;
         $data['linkToProfilePage'] = $data['linkToProfilePage'] ? 1 : 0;
+        $data['hideNotViewableUser'] = $data['hideNotViewableUser'] ? 1 : 0;
+        $data['displayMode'] = (empty($data['displayMode'])) ? 'S' : $data['displayMode'];
         parent::save($data);
     }
 
     public function view()
     {
-        $c = Page::getCurrentPage();
-        $uID = $c->getCollectionUserID();
-        $ui = Core::make('Concrete\Core\User\UserInfoRepository')->getByID($uID);
-        $this->set('ui', $ui);
+        if ($this->displayMode != 'E') {
+            $c = Page::getCurrentPage();
+            $uID = $c->getCollectionUserID();
+            $ui = $this->app->make('Concrete\Core\User\UserInfoRepository')->getByID($uID);
+            if (is_object($ui)) {
+                $viewable = true;
+                if ($this->hideNotViewableUser && !$ui->getAttribute('is_viewable_on_author_list')) {
+                    $viewable = false;
+                }
+                if ($viewable) {
+                    $this->set('ui', $ui);
+                }
+            }
+        }
 
-        $this->set('publicProfileAttributes', UserAttributeKey::getPublicProfileList());
-        $this->set('memberListAttributes', UserAttributeKey::getMemberListList());
-        $this->set('publicProfileEnabled', Config::get('concrete.user.profiles_enabled'));
+        /** @var UserCategory $userCategory */
+        $userCategory = $this->app->make(UserCategory::class);
+        $this->set('publicProfileAttributes', $userCategory->getPublicProfileList());
+        $this->set('memberListAttributes', $userCategory->getMemberListList());
+
+        /** @var Liaison $config */
+        $config = $this->app->make('config');
+        $this->set('publicProfileEnabled', $config->get('concrete.user.profiles_enabled'));
+
+        if ($this->detailPage > 0) {
+            $detailPage = Page::getByID($this->detailPage);
+            if (is_object($detailPage) && !$detailPage->isError()) {
+                $this->set('detailPage', $detailPage);
+            }
+        }
+    }
+
+    public function action_view_user_detail($uID = null)
+    {
+        if ($this->displayMode == 'E') {
+            $ui = $this->app->make('Concrete\Core\User\UserInfoRepository')->getByID($uID);
+            if (is_object($ui)) {
+                /** @var Strings $stringValidator */
+                $stringValidator = $this->app->make('helper/validation/strings');
+                $name = $ui->getAttribute('nick_name', 'display');
+                $name = ($stringValidator->notempty($name)) ? $name : $ui->getUserName();
+                /** @var Seo $seo */
+                $seo = $this->app->make('helper/seo');
+                $seo->addTitleSegment($name);
+                $this->set('ui', $ui);
+            }
+            $this->view();
+        }
     }
 }

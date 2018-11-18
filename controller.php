@@ -3,27 +3,26 @@ namespace Concrete\Package\AuthorProfile;
 
 use Concrete\Core\Package\Package;
 use Concrete\Core\Backup\ContentImporter;
-use Core;
 
 class Controller extends Package
 {
     /**
-     * @var string Package handle.
+     * @var string package handle
      */
     protected $pkgHandle = 'author_profile';
 
     /**
-     * @var string Required concrete5 version.
+     * @var string required concrete5 version
      */
     protected $appVersionRequired = '8.2.0';
 
     /**
-     * @var string Package version.
+     * @var string package version
      */
-    protected $pkgVersion = '1.1';
+    protected $pkgVersion = '1.1.9';
 
     /**
-     * @var boolean Remove \Src from package namespace.
+     * @var bool remove \Src from package namespace
      */
     protected $pkgAutoloaderMapCoreExtensions = true;
 
@@ -58,15 +57,26 @@ class Controller extends Package
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function upgrade()
+    {
+        parent::upgrade();
+
+        $ci = new ContentImporter();
+        $ci->importContentFile($this->getPackagePath() . '/config/install.xml');
+    }
+
+    /**
      * Startup process of the package.
      */
     public function on_start()
     {
         /** @var \Concrete\Core\Application\Service\UserInterface\Help\BlockTypeManager $blockTypeManager */
-        $blockTypeManager = Core::make('help/block_type');
-        $blockTypeManager->registerMessages(array(
-            'author_profile' => array(t('You can show informations about the author of current page.')),
-            'author_page_list' => array(t("Author's Page List blocks creates a navigation menu that shows pages created by the current page's author. You can also use this block on Public Profile single page.")),
-        ));
+        $blockTypeManager = $this->app->make('help/block_type');
+        $blockTypeManager->registerMessages([
+            'author_profile' => [t('You can show informations about the author of current page.')],
+            'author_page_list' => [t("Author's Page List blocks creates a navigation menu that shows pages created by the current page's author. You can also use this block on Public Profile single page.")],
+        ]);
     }
 }

@@ -23,6 +23,11 @@ var authorPageList ={
             }
         });
 
+        this.showHideDisplayType();
+
+        $('#displayMode').change(function() {
+            authorPageList.showHideDisplayType();
+        });
     },
     truncationShown:function(cb){
         var truncateTxt=$('#ccm-pagelist-truncateTxt');
@@ -82,6 +87,13 @@ var authorPageList ={
     },
     hideLoader: function() {
         preview_loader.hide();
+    },
+    showHideDisplayType: function() {
+        if($('#displayMode').val() === 'E') {
+            $('.ccm-block-author-page-list-option').show();
+        } else {
+            $('.ccm-block-author-page-list-option').hide();
+        }
     }
 };
 

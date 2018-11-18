@@ -12,6 +12,25 @@ $form = Core::make('helper/form');
             <legend><?= t('Settings') ?></legend>
 
             <div class="form-group">
+                <?=$form->label('displayMode', t('Display Mode'))?>
+                <?=$form->select('displayMode', [
+                    'S' => t('Display pages written by the author of current page.'),
+                    'E' => t('Enable other blocks to filter pages by the user.'),
+                ], (isset($displayMode)) ? $displayMode : null);
+                ?>
+            </div>
+
+            <div class="form-group ccm-block-author-page-list-option">
+                <div class="checkbox">
+                    <label>
+                        <?php echo $form->checkbox('hideNotViewableUser', 1, (isset($hideNotViewableUser)) ? $hideNotViewableUser : null); ?>
+                        <?php echo t('Hide not viewable in author list user'); ?>
+                    </label>
+                    <span class="help-block"><?= t("If you enable this option, this block won't display the pages written by the user when the user's %sis_viewable_on_author_list%s attribute value is not true.", '<code>', '</code>'); ?></span>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class='control-label'><?= t('Number of Pages to Display') ?></label>
                 <input type="text" name="num" value="<?= h($num) ?>" class="form-control">
             </div>

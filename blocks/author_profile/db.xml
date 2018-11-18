@@ -33,6 +33,19 @@
       <default value="0"/>
       <notnull/>
     </field>
+    <field name="displayMode" type="string" size="1">
+      <default value="S"/>
+    </field>
+    <field name="hideNotViewableUser" type="boolean">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="detailPage" type="integer">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
   </table>
 
 </schema>

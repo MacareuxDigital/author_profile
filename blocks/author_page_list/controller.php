@@ -1,118 +1,146 @@
 <?php
 namespace Concrete\Package\AuthorProfile\Block\AuthorPageList;
 
+use Concrete\Core\Attribute\Category\PageCategory;
 use Concrete\Core\Block\BlockController;
-use PageList;
-use Page;
-use CollectionAttributeKey;
-use Database;
-use Core;
-use BlockType;
+use Concrete\Core\Page\PageList;
+use Concrete\Core\Page\Page;
+use Concrete\Core\Block\BlockType\BlockType;
 
 class Controller extends BlockController
 {
     protected $btTable = 'btAuthorPageList';
     protected $btDefaultSet = 'social';
-    protected $btInterfaceWidth = "800";
-    protected $btInterfaceHeight = "500";
+    protected $btInterfaceWidth = '800';
+    protected $btInterfaceHeight = '500';
     protected $btWrapperClass = 'ccm-ui';
     protected $btCacheBlockRecord = true;
     protected $btCacheBlockOutput = null;
     protected $btCacheBlockOutputOnPost = true;
     protected $btCacheBlockOutputLifetime = 300;
 
+    /** @var PageList|null */
+    public $list;
+    /** @var int|null */
+    public $uID;
+
     public function getBlockTypeDescription()
     {
-        return t("A block to display pages written by current user.");
+        return t('A block to display pages written by current user.');
     }
 
     public function getBlockTypeName()
     {
-        return t("Authors Pages");
+        return t('Authors Pages');
     }
 
-    public function on_start()
+    /**
+     * @param bool $uID
+     * @return PageList|null
+     */
+    public function getPageList($uID = false)
     {
-        $this->list = new PageList();
-        $this->list->disableAutomaticSorting();
-
-        $c = Page::getCurrentPage();
-        if (is_object($c) && !$c->isError()) {
+        if ($this->displayMode != 'E' && $uID == false) {
+            $c = Page::getCurrentPage();
             $cnt = $c->getPageController();
             if ($profile = $cnt->get('profile')) {
                 $uID = $profile->getUserID();
             } else {
                 $uID = $c->getCollectionUserID();
             }
-            $this->uID = $uID;
-            $this->list->filterByUserID($uID);
         }
 
-        $cArray = array();
+        $ui = $this->app->make('Concrete\Core\User\UserInfoRepository')->getByID($uID);
+        if (is_object($ui)) {
+            $viewable = true;
+            if ($this->hideNotViewableUser && !$ui->getAttribute('is_viewable_on_author_list')) {
+                $viewable = false;
+            }
+            if ($viewable) {
+                $this->list = new PageList();
+                $this->list->disableAutomaticSorting();
+                $this->list->filterByUserID($uID);
+                $this->uID = $uID;
 
-        switch ($this->orderBy) {
-            case 'display_asc':
-                $this->list->sortByDisplayOrder();
-                break;
-            case 'display_desc':
-                $this->list->sortByDisplayOrderDescending();
-                break;
-            case 'chrono_asc':
-                $this->list->sortByPublicDate();
-                break;
-            case 'random':
-                $this->list->sortBy('RAND()');
-                break;
-            case 'alpha_asc':
-                $this->list->sortByName();
-                break;
-            case 'alpha_desc':
-                $this->list->sortByNameDescending();
-                break;
-            default:
-                $this->list->sortByPublicDateDescending();
-                break;
-        }
+                switch ($this->orderBy) {
+                    case 'display_asc':
+                        $this->list->sortByDisplayOrder();
+                        break;
+                    case 'display_desc':
+                        $this->list->sortByDisplayOrderDescending();
+                        break;
+                    case 'chrono_asc':
+                        $this->list->sortByPublicDate();
+                        break;
+                    case 'random':
+                        $this->list->sortBy('RAND()');
+                        break;
+                    case 'alpha_asc':
+                        $this->list->sortByName();
+                        break;
+                    case 'alpha_desc':
+                        $this->list->sortByNameDescending();
+                        break;
+                    default:
+                        $this->list->sortByPublicDateDescending();
+                        break;
+                }
 
-        if ($this->displayFeaturedOnly == 1) {
-            $cak = CollectionAttributeKey::getByHandle('is_featured');
-            if (is_object($cak)) {
-                $this->list->filterByIsFeatured(1);
+                /** @var PageCategory $pageCategory */
+                $pageCategory = $this->app->make(PageCategory::class);
+
+                if ($this->displayFeaturedOnly == 1) {
+                    $cak = $pageCategory->getAttributeKeyByHandle('is_featured');
+                    if (is_object($cak)) {
+                        $this->list->filterByIsFeatured(1);
+                    }
+                }
+                if ($this->displayAliases) {
+                    $this->list->includeAliases();
+                }
+                $this->list->filter('cvName', '', '!=');
+
+                if ($this->ptID) {
+                    $this->list->filterByPageTypeID($this->ptID);
+                }
+
+                $cak = $pageCategory->getAttributeKeyByHandle('exclude_page_list');
+                if (is_object($cak)) {
+                    $this->list->filterByExcludePageList(false);
+                }
             }
         }
-        if ($this->displayAliases) {
-            $this->list->includeAliases();
-        }
-        $this->list->filter('cvName', '', '!=');
-
-        if ($this->ptID) {
-            $this->list->filterByPageTypeID($this->ptID);
-        }
-
-        $this->list->filterByExcludePageList(false);
 
         return $this->list;
     }
 
     public function view()
     {
-        $list = $this->list;
-        $nh = Core::make('helper/navigation');
+        if (is_object($this->list)) {
+            $list = $this->list;
+        } else {
+            $list = $this->getPageList();
+        }
+        $nh = $this->app->make('helper/navigation');
         $this->set('nh', $nh);
 
         //Pagination...
         $showPagination = false;
-        if ($this->num > 0) {
-            $list->setItemsPerPage($this->num);
-            $pagination = $list->getPagination();
-            $pages = $pagination->getCurrentPageResults();
-            if ($pagination->getTotalPages() > 1 && $this->paginate) {
-                $showPagination = true;
-                $pagination = $pagination->renderDefaultView();
-                $this->set('pagination', $pagination);
+        if (is_object($list)) {
+            if ($this->num > 0) {
+                $list->setItemsPerPage($this->num);
+                $pagination = $list->getPagination();
+                $pages = $pagination->getCurrentPageResults();
+                if ($pagination->getTotalPages() > 1 && $this->paginate) {
+                    $showPagination = true;
+                    $pagination = $pagination->renderDefaultView();
+                    $this->set('pagination', $pagination);
+                }
+            } else {
+                $pages = $list->getResults();
             }
         } else {
-            $pages = $list->getResults();
+            $pages = [];
         }
 
         if ($showPagination) {
@@ -124,15 +152,25 @@ class Controller extends BlockController
         $this->set('showPagination', $showPagination);
     }
 
+    public function action_view_user_detail($uID = null)
+    {
+        if ($this->displayMode == 'E') {
+            $this->getPageList($uID);
+        }
+        $this->view();
+    }
+
     public function add()
     {
-        $uh = Core::make('helper/concrete/urls');
+        $uh = $this->app->make('helper/concrete/urls');
         $this->set('uh', $uh);
         $this->set('includeDescription', true);
         $this->set('includeName', true);
         $this->set('bt', BlockType::getByHandle('author_page_list'));
-        $this->set('featuredAttribute', CollectionAttributeKey::getByHandle('is_featured'));
-        $this->set('thumbnailAttribute', CollectionAttributeKey::getByHandle('thumbnail'));
+        /** @var PageCategory $cak */
+        $cak = $this->app->make(PageCategory::class);
+        $this->set('featuredAttribute', $cak->getAttributeKeyByHandle('is_featured'));
+        $this->set('thumbnailAttribute', $cak->getAttributeKeyByHandle('thumbnail'));
     }
 
     public function edit()
@@ -140,16 +178,18 @@ class Controller extends BlockController
         $b = $this->getBlockObject();
         $bID = $b->getBlockID();
         $this->set('bID', $bID);
-        $uh = Core::make('helper/concrete/urls');
+        $uh = $this->app->make('helper/concrete/urls');
         $this->set('uh', $uh);
         $this->set('bt', BlockType::getByHandle('author_page_list'));
-        $this->set('featuredAttribute', CollectionAttributeKey::getByHandle('is_featured'));
-        $this->set('thumbnailAttribute', CollectionAttributeKey::getByHandle('thumbnail'));
+        /** @var PageCategory $cak */
+        $cak = $this->app->make(PageCategory::class);
+        $this->set('featuredAttribute', $cak->getAttributeKeyByHandle('is_featured'));
+        $this->set('thumbnailAttribute', $cak->getAttributeKeyByHandle('thumbnail'));
     }
 
     public function save($args)
     {
-        $args = $args + array(
+        $args = $args + [
                     'num' => 0,
                     'includeDate' => 0,
                     'truncateSummaries' => 0,
@@ -162,7 +202,7 @@ class Controller extends BlockController
                     'useButtonForLink' => 0,
                     'includeName' => 0,
                     'includeDescription' => 0,
-                );
+                ];
 
         $args['num'] = ($args['num'] > 0) ? intval($args['num']) : 0;
         $args['includeDate'] = ($args['includeDate']) ? '1' : '0';
@@ -176,6 +216,7 @@ class Controller extends BlockController
         $args['useButtonForLink'] = ($args['useButtonForLink']) ? '1' : '0';
         $args['includeName'] = ($args['includeName']) ? '1' : '0';
         $args['includeDescription'] = ($args['includeDescription']) ? '1' : '0';
+        $data['displayMode'] = (empty($data['displayMode'])) ? 'S' : $data['displayMode'];
 
         parent::save($args);
     }
@@ -206,7 +247,7 @@ class Controller extends BlockController
     public function cacheBlockOutput()
     {
         if ($this->btCacheBlockOutput === null) {
-            if (!$this->paginate) {
+            if ($this->displayMode != 'E' && !$this->paginate) {
                 $this->btCacheBlockOutput = true;
             } else {
                 $this->btCacheBlockOutput = false;

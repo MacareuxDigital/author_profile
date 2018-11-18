@@ -6,7 +6,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 ?>
 
 <?php if ( $c->isEditMode() && $controller->isBlockEmpty()) { ?>
-    <div class="ccm-edit-mode-disabled-item"><?=t('Empty Page List Block.')?></div>
+    <div class="ccm-edit-mode-disabled-item"><?=t('Empty Authors Pages Block.')?></div>
 <?php } else { ?>
 
     <div class="ccm-block-page-list-wrapper ccm-block-author-page-list-wrapper">
@@ -113,7 +113,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
                                     <?php if (isset($useButtonForLink) && $useButtonForLink) { ?>
                                         <?php echo $title; ?>
                                     <?php } else { ?>
-                                        <a href="<?php echo $url ?>" target="<?php echo $target ?>"><?php echo $title ?></a>
+                                        <a href="<?= h($url); ?>" target="<?php echo $target ?>"><?= h($title); ?></a>
                                     <?php } ?>
                                 </div>
                             <?php endif; ?>
@@ -124,13 +124,13 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
                             <?php if (isset($includeDescription) && $includeDescription): ?>
                                 <div class="ccm-block-page-list-description">
-                                    <?php echo $description ?>
+                                    <?= h($description); ?>
                                 </div>
                             <?php endif; ?>
 
-                            <?php if (isset($useButtonForLink) && $useButtonForLink): ?>
+                            <?php if (isset($useButtonForLink) && $useButtonForLink && isset($buttonLinkText)): ?>
                                 <div class="ccm-block-page-list-page-entry-read-more">
-                                    <a href="<?=$url?>" target="<?=$target?>" class="<?=$buttonClasses?>"><?=$buttonLinkText?></a>
+                                    <a href="<?= h($url); ?>" target="<?=$target?>" class="<?=$buttonClasses?>"><?= h($buttonLinkText); ?></a>
                                 </div>
                             <?php endif; ?>
 
@@ -141,14 +141,14 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
             <?php endforeach; ?>
         </div>
 
-        <?php if (count($pages) == 0): ?>
-            <div class="ccm-block-page-list-no-pages"><?=h($noResultsMessage)?></div>
+        <?php if (count($pages) == 0 && isset($noResultsMessage)): ?>
+            <div class="ccm-block-page-list-no-pages"><?= h($noResultsMessage); ?></div>
         <?php endif;?>
 
     </div><!-- end .ccm-block-page-list -->
 
 
-    <?php if ($showPagination): ?>
+    <?php if (isset($showPagination) && $showPagination && isset($pagination)): ?>
         <?php echo $pagination;?>
     <?php endif; ?>
 
