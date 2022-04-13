@@ -321,8 +321,10 @@ class Controller extends BlockController
 		$controller->buttonLinkText = $_REQUEST['buttonLinkText'] ?? null;
 		$controller->pageListTitle = $_REQUEST['pageListTitle'] ?? null;
 		$controller->noResultsMessage = $_REQUEST['noResultsMessage'] ?? null;
-		$controller->set('includeEntryText', true);
-		$controller->set('includeName', true);
+		$controller->includeName = $_REQUEST['includeName'] ?? false;
+		$controller->set('includeName', $controller->includeName);
+		$controller->set('pageListTitle', $controller->pageListTitle);
+		$controller->set('noResultsMessage', $controller->noResultsMessage);
 		$bv = new BlockView($bt);
 		ob_start();
 		$bv->render('view');
