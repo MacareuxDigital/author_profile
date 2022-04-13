@@ -1,11 +1,16 @@
 <?php
-defined('C5_EXECUTE') or die("Access Denied.");
-$th = Core::make('helper/text');
+defined('C5_EXECUTE') or die('Access Denied.');
+use Concrete\Core\Page\Page;
+use Concrete\Core\Support\Facade\Application;
+
+$app = Application::getFacadeApplication();
+$th = $app->make('helper/text');
 $c = Page::getCurrentPage();
-$dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service\Date */
+$dh = $app->make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service\Date */
+$displayThumbnail = $displayThumbnail ?? false;
 ?>
 
-<?php if ( $c->isEditMode() && $controller->isBlockEmpty()) { ?>
+<?php if (is_object($c) && $c->isEditMode() && $controller->isBlockEmpty()) { ?>
     <div class="ccm-edit-mode-disabled-item"><?=t('Empty Authors Pages Block.')?></div>
 <?php } else { ?>
 
@@ -97,10 +102,10 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
                     <?php if (is_object($thumbnail)): ?>
                         <div class="ccm-block-page-list-page-entry-thumbnail">
                             <?php
-                            $img = Core::make('html/image', array($thumbnail));
+                            $img = $app->make('html/image', [$thumbnail]);
                             $tag = $img->getTag();
                             $tag->addClass('img-responsive');
-                            print $tag;
+                            echo $tag;
                             ?>
                         </div>
                     <?php endif; ?>
@@ -143,13 +148,13 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
         <?php if (count($pages) == 0 && isset($noResultsMessage)): ?>
             <div class="ccm-block-page-list-no-pages"><?= h($noResultsMessage); ?></div>
-        <?php endif;?>
+        <?php endif; ?>
 
     </div><!-- end .ccm-block-page-list -->
 
 
     <?php if (isset($showPagination) && $showPagination && isset($pagination)): ?>
-        <?php echo $pagination;?>
+        <?php echo $pagination; ?>
     <?php endif; ?>
 
 <?php } ?>

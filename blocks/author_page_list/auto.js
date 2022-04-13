@@ -1,6 +1,6 @@
 var container, preview_container, preview_loader, preview_render;
 var authorPageList ={
-    servicesDir: $("input[name=pageListToolsDir]").val(),
+    previewPane: $("input[name=pageListPreviewPane]").val(),
     init:function(){
         this.blockForm=document.forms['ccm-block-form'];
 
@@ -57,7 +57,7 @@ var authorPageList ={
             value: CCM_CID
         });
 
-        $.get(this.servicesDir + '/preview_pane', query, function(msg) {
+        $.get(this.previewPane, query, function(msg) {
             container.find('div.preview').find('div.render').html(msg);
             authorPageList.hideLoader();
         }).fail(function() {
@@ -71,9 +71,9 @@ var authorPageList ={
             group, left;
 
         if (element.is('input[type=checkbox]')) {
-            group = element.closest('div.checkbox');
+            group = element.closest('div.form-check');
         } else if (element.is('input[type=radio]')) {
-            group = element.closest('div.radio');
+            group = element.closest('div.form-check');
         } else {
             group = element.closest('div.form-group');
         }
