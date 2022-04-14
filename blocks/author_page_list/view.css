@@ -44,3 +44,15 @@ div.ccm-block-page-list-page-entry-text div.ccm-block-page-list-title {
 div.ccm-block-page-list-page-entry-read-more {
     margin-top: 20px;
 }
+
+.ccm-ui .input-group-addon {
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555555;
+    text-align: center;
+    background-color: #eeeeee;
+    border: 1px solid #dedede;
+    border-radius:2px
+}

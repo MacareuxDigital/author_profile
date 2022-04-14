@@ -10,6 +10,9 @@ use Concrete\Core\Utility\Service\Validation\Strings;
 
 class Controller extends BlockController
 {
+	public $hideNotViewableUser;
+	public $detailPage;
+	
     protected $btTable = 'btAuthorProfile';
     protected $btDefaultSet = 'social';
     protected $btInterfaceWidth = '400';
@@ -42,14 +45,15 @@ class Controller extends BlockController
 
     public function save($data)
     {
-        $data['displayBasicAttributes'] = $data['displayBasicAttributes'] ? 1 : 0;
-        $data['displayProfileAttributes'] = $data['displayProfileAttributes'] ? 1 : 0;
-        $data['displayMemberListAttributes'] = $data['displayMemberListAttributes'] ? 1 : 0;
-        $data['displayProfilePicture'] = $data['displayProfilePicture'] ? 1 : 0;
-        $data['linkToProfilePage'] = $data['linkToProfilePage'] ? 1 : 0;
-        $data['hideNotViewableUser'] = $data['hideNotViewableUser'] ? 1 : 0;
+        $data['displayBasicAttributes'] = isset($data['displayBasicAttributes']) ? 1 : 0;
+        $data['displayProfileAttributes'] = isset($data['displayProfileAttributes']) ? 1 : 0;
+        $data['displayMemberListAttributes'] = isset($data['displayMemberListAttributes']) ? 1 : 0;
+        $data['displayProfilePicture'] = isset($data['displayProfilePicture']) ? 1 : 0;
+        $data['linkToProfilePage'] = isset($data['linkToProfilePage']) ? 1 : 0;
+        $data['hideNotViewableUser'] = isset($data['hideNotViewableUser']) ? 1 : 0;
         $data['displayMode'] = (empty($data['displayMode'])) ? 'S' : $data['displayMode'];
-        parent::save($data);
+	    $data['detailPage'] = (int) $data['detailPage'];
+	    parent::save($data);
     }
 
     public function view()

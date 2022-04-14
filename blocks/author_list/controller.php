@@ -8,6 +8,8 @@ use Concrete\Core\User\UserList;
 
 class Controller extends BlockController
 {
+	public $detailPage;
+	
     protected $btTable = 'btAuthorList';
     protected $btDefaultSet = 'social';
     protected $btInterfaceWidth = '400';
@@ -72,4 +74,10 @@ class Controller extends BlockController
             }
         }
     }
+	
+	public function save($data)
+	{
+		$data['detailPage'] = (int) $data['detailPage'];
+		parent::save($data);
+	}
 }

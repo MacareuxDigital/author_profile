@@ -1,14 +1,39 @@
 <?php
+
 namespace Concrete\Package\AuthorProfile\Block\AuthorPageList;
 
 use Concrete\Core\Attribute\Category\PageCategory;
 use Concrete\Core\Block\BlockController;
-use Concrete\Core\Page\PageList;
-use Concrete\Core\Page\Page;
 use Concrete\Core\Block\BlockType\BlockType;
+use Concrete\Core\Block\View\BlockView;
+use Concrete\Core\Http\ResponseFactoryInterface;
+use Concrete\Core\Page\Page;
+use Concrete\Core\Page\PageList;
 
 class Controller extends BlockController
 {
+    /** @var PageList|null */
+    public $list;
+    /** @var int|null */
+    public $uID;
+	public $num;
+	public $ptID;
+	public $displayFeaturedOnly;
+	public $displayAliases;
+	public $paginate;
+	public $orderBy;
+	public $truncateSummaries;
+	public $truncateChars;
+	public $includeDate;
+	public $displayThumbnail;
+	public $useButtonForLink;
+	public $buttonLinkText;
+	public $pageListTitle;
+	public $noResultsMessage;
+	public $includeName;
+	public $includeDescription;
+	public $displayMode;
+	public $hideNotViewableUser;
     protected $btTable = 'btAuthorPageList';
     protected $btDefaultSet = 'social';
     protected $btInterfaceWidth = '800';
@@ -18,11 +43,6 @@ class Controller extends BlockController
     protected $btCacheBlockOutput = null;
     protected $btCacheBlockOutputOnPost = true;
     protected $btCacheBlockOutputLifetime = 300;
-
-    /** @var PageList|null */
-    public $list;
-    /** @var int|null */
-    public $uID;
 
     public function getBlockTypeDescription()
     {
@@ -36,6 +56,7 @@ class Controller extends BlockController
 
     /**
      * @param bool $uID
+     *
      * @return PageList|null
      */
     public function getPageList($uID = false)
@@ -116,6 +137,7 @@ class Controller extends BlockController
 
     public function view()
     {
+
         if (is_object($this->list)) {
             $list = $this->list;
         } else {
@@ -146,6 +168,7 @@ class Controller extends BlockController
         if ($showPagination) {
             $this->requireAsset('css', 'core/frontend/pagination');
         }
+
         $this->set('pages', $pages);
         $this->set('list', $list);
         $this->set('uID', $this->uID);
@@ -204,15 +227,15 @@ class Controller extends BlockController
                     'includeDescription' => 0,
                 ];
 
-        $args['num'] = ($args['num'] > 0) ? intval($args['num']) : 0;
+        $args['num'] = ($args['num'] > 0) ? (int) ($args['num']) : 0;
         $args['includeDate'] = ($args['includeDate']) ? '1' : '0';
         $args['truncateSummaries'] = ($args['truncateSummaries']) ? '1' : '0';
-        $args['truncateChars'] = ($args['truncateChars'] > 0) ? intval($args['truncateChars']) : 0;
+        $args['truncateChars'] = ($args['truncateChars'] > 0) ? (int) ($args['truncateChars']) : 0;
         $args['displayFeaturedOnly'] = ($args['displayFeaturedOnly']) ? '1' : '0';
         $args['displayThumbnail'] = ($args['displayThumbnail']) ? '1' : '0';
         $args['displayAliases'] = ($args['displayAliases']) ? '1' : '0';
         $args['paginate'] = ($args['paginate']) ? '1' : '0';
-        $args['ptID'] = intval($args['ptID']);
+        $args['ptID'] = (int) ($args['ptID']);
         $args['useButtonForLink'] = ($args['useButtonForLink']) ? '1' : '0';
         $args['includeName'] = ($args['includeName']) ? '1' : '0';
         $args['includeDescription'] = ($args['includeDescription']) ? '1' : '0';
@@ -230,18 +253,20 @@ class Controller extends BlockController
         if (count($pages) == 0) {
             if ($this->noResultsMessage) {
                 return false;
-            } else {
-                return true;
             }
-        } else {
+
+                return true;
+
+        }
             if ($this->includeName || $this->includeDate || $this->displayThumbnail
                 || $this->includeDescription || $this->useButtonForLink
             ) {
                 return false;
-            } else {
-                return true;
             }
-        }
+
+                return true;
+
+
     }
 
     public function cacheBlockOutput()
@@ -256,4 +281,57 @@ class Controller extends BlockController
 
         return  $this->btCacheBlockOutput;
     }
+
+	public function getPassThruActionAndParameters($parameters): array
+	{
+		if ($parameters[0] == 'preview_pane') {
+			$method = 'action_' . $parameters[0];
+			$parameters = array_slice($parameters, 1);
+		}else {
+			$parameters = $method = null;
+		}
+
+		return [$method, $parameters];
+	}
+
+	public function isValidControllerTask($method, $parameters = []): bool
+	{
+		if ($method == 'action_preview_pane') {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function action_preview_pane()
+	{
+		$bt = BlockType::getByHandle('author_page_list');
+		//$bt = BlockType::getByHandle('page_list');
+		$controller = $bt->getController();
+		$controller->num = $_REQUEST['num'] ?? 0;
+		$controller->orderBy = $_REQUEST['orderBy'] ?? null;
+		$controller->ptID = $_REQUEST['ptID'] ?? null;
+		$controller->displayFeaturedOnly = $_REQUEST['displayFeaturedOnly'] ?? false;
+		$controller->displayAliases = $_REQUEST['displayAliases'] ?? false;
+		$controller->paginate = $_REQUEST['paginate'] ?? false;
+		$controller->truncateSummaries = $_REQUEST['truncateSummaries'] ?? false;
+		$controller->truncateChars = $_REQUEST['truncateChars'] ?? 0;
+		$controller->displayThumbnail = $_REQUEST['displayThumbnail'] ?? false;
+		$controller->useButtonForLink = $_REQUEST['useButtonForLink'] ?? false;
+		$controller->buttonLinkText = $_REQUEST['buttonLinkText'] ?? null;
+		$controller->pageListTitle = $_REQUEST['pageListTitle'] ?? null;
+		$controller->noResultsMessage = $_REQUEST['noResultsMessage'] ?? null;
+		$controller->includeName = $_REQUEST['includeName'] ?? false;
+		$controller->set('includeName', $controller->includeName);
+		$controller->set('pageListTitle', $controller->pageListTitle);
+		$controller->set('noResultsMessage', $controller->noResultsMessage);
+		$bv = new BlockView($bt);
+		ob_start();
+		$bv->render('view');
+		$content = ob_get_contents();
+		ob_end_clean();
+
+
+		return $this->app->make(ResponseFactoryInterface::class)->create($content);
+	}
 }
