@@ -19,10 +19,11 @@ class Controller extends BlockController
     protected $btInterfaceHeight = '300';
     protected $btWrapperClass = 'ccm-ui';
     protected $btCacheBlockRecord = true;
-    protected $btCacheBlockOutput = true;
+    protected $btCacheBlockOutput = null;
     protected $btCacheBlockOutputOnPost = true;
     protected $btCacheBlockOutputForRegisteredUsers = false;
     protected $btCacheBlockOutputLifetime = 0; //until manually updated or cleared
+    protected $displayMode;
 
     public function getBlockTypeDescription()
     {
@@ -106,5 +107,18 @@ class Controller extends BlockController
             }
             $this->view();
         }
+    }
+
+    public function cacheBlockOutput()
+    {
+        if ($this->btCacheBlockOutput === null) {
+            if ($this->displayMode == 'E') {
+                $this->btCacheBlockOutput = false;
+            } else {
+                $this->btCacheBlockOutput = true;
+            }
+        }
+
+        return $this->btCacheBlockOutput;
     }
 }

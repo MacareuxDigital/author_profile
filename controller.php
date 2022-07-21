@@ -19,7 +19,7 @@ class Controller extends Package
     /**
      * @var string package version
      */
-    protected $pkgVersion = '1.2.0';
+    protected $pkgVersion = '1.2.1';
 
     /**
      * @var bool remove \Src from package namespace
